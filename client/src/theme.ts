@@ -2,6 +2,16 @@ import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
 
 export interface ITheme extends Theme {}
 
+const palette = {
+  primary: {
+    main: "#031BA6",
+  },
+  background: {
+    paper: "#ffffff",
+    default: "#ffffff",
+  },
+};
+
 const theme = createTheme({
   spacing: 5,
   breakpoints: {
@@ -13,16 +23,30 @@ const theme = createTheme({
       xl: 1920,
     },
   },
-  palette: {
-    background: {
-      paper: "#fff",
-      gray: "#eaeaea",
-    },
-  },
+  palette: palette,
   components: {
     MuiFormControl: {
       styleOverrides: {
         root: {},
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+          height: 48,
+          fontSize: 16,
+          fontWeight: 400,
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h2: {
+          fontSize: 24,
+          lineHeight: "36px",
+          fontWeight: 500,
+        },
       },
     },
   },
