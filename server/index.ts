@@ -11,7 +11,7 @@ async function start() {
     logger: devLoggerOptions,
   });
   fastify.register(App);
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 8080;
   const address = undefined;
   await fastify.listen(port, address);
 }

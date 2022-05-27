@@ -1,8 +1,10 @@
 import { FastifyInstance } from "fastify";
 import Cors from "@fastify/cors";
 import Env from "@fastify/env";
+import AutoLoad from "@fastify/autoload";
 import fastifyIO from "fastify-socket.io";
 import S from "fluent-json-schema";
+import path from "path";
 
 export default async function (fastify: FastifyInstance) {
   fastify.get("/ping", async (request, reply) => {
@@ -22,4 +24,10 @@ export default async function (fastify: FastifyInstance) {
   });
 
   fastify.register(fastifyIO);
+
+  fastify.register(AutoLoad, {
+    dir: path.join(__dirname, "routes"),
+    dirNameRoutePrefix: false,
+    // options: Object.assign({}, opts),
+  });
 }

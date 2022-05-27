@@ -19,6 +19,7 @@ const IntroPage = () => {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100%',
+        background: 'green',
       }}
       >
         <Logo />
