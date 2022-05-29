@@ -1,8 +1,4 @@
-import { Dispatch } from "@reduxjs/toolkit";
-import {
-  ErrorActions,
-  ErrorActionTypes,
-} from "../action-types/errorActionTypes";
+import { IParticipant } from "../../types";
 import { RoomInfoActionTypes } from "../action-types/roomInfoActionTypes";
 
 export const setIsRoomHost = (isRoomHost: boolean) => {
@@ -32,5 +28,12 @@ export const setRoomId = (id: string) => {
   return {
     type: RoomInfoActionTypes.SET_ROOM_ID,
     payload: id,
+  };
+};
+
+export const setParticipants = (participants: IParticipant[]) => {
+  return {
+    type: RoomInfoActionTypes.SET_PARTICIPANTS,
+    payload: participants,
   };
 };

@@ -10,6 +10,9 @@ const palette = {
     paper: "#ffffff",
     default: "#ffffff",
   },
+  grey: {
+    50: "#9E9E9E",
+  },
 };
 
 const theme = createTheme({
@@ -24,6 +27,9 @@ const theme = createTheme({
     },
   },
   palette: palette,
+  shape: {
+    borderRadius: 10,
+  },
   components: {
     MuiFormControl: {
       styleOverrides: {
@@ -46,6 +52,18 @@ const theme = createTheme({
           fontSize: 24,
           lineHeight: "36px",
           fontWeight: 500,
+        },
+        h3: {
+          fontSize: 18,
+          lineHeight: "27px",
+          fontWeight: 700,
+          letterSpacing: "0.15px",
+          textTransform: "uppercase",
+        },
+        body1: {
+          letterSpacing: "0.15px",
+          fontSize: 16,
+          lineHeight: "24px",
         },
       },
     },

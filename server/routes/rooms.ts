@@ -1,10 +1,8 @@
 import { RouteOptions, FastifyRequest, FastifyReply } from "fastify";
 import S from "fluent-json-schema";
+import { rooms } from "../index";
 
 export const autoPrefix = "/api";
-
-const rooms: any[] = [];
-const connectedUsers = [];
 
 export default async function status(fastify: any, opts: RouteOptions) {
   fastify.route({

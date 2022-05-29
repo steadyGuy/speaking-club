@@ -11,6 +11,8 @@ const initState: RoomInfoState = {
   isConnectedOnlyWithAudio: false,
   isFull: false,
   isExists: false,
+  loading: false,
+  participants: [],
 };
 
 const roomInfoReducer = (state = initState, action: RoomInfoActions) => {
@@ -43,6 +45,18 @@ const roomInfoReducer = (state = initState, action: RoomInfoActions) => {
       return {
         ...state,
         ...action.payload,
+      };
+
+    case RoomInfoActionTypes.LOADING_ROOM_INFO:
+      return {
+        ...state,
+        loading: !state.loading,
+      };
+
+    case RoomInfoActionTypes.SET_PARTICIPANTS:
+      return {
+        ...state,
+        participants: action.payload,
       };
 
     default:

@@ -1,9 +1,13 @@
+import { IParticipant } from "../../types";
+
 export enum RoomInfoActionTypes {
   SET_IS_ROOM_HOST = "SET_IS_ROOM_HOST",
   SET_CONNECT_ONLY_WITH_AUDIO = "SET_CONNECT_ONLY_WITH_AUDIO",
   SET_ROOM_ID = "SET_ROOM_ID",
   SET_IDENTITY = "SET_IDENTITY",
   FETCH_ROOM_INFO_SUCCESS = "FETCH_ROOM_INFO_SUCCESS",
+  LOADING_ROOM_INFO = "LOADING_ROOM_INFO",
+  SET_PARTICIPANTS = "SET_PARTICIPANTS",
 }
 
 export type RoomInfoState = {
@@ -13,10 +17,22 @@ export type RoomInfoState = {
   isConnectedOnlyWithAudio: boolean;
   isFull: boolean;
   isExists: boolean;
+  loading: boolean;
+  participants: IParticipant[];
 };
 
 interface SetRoomHostAction {
   type: RoomInfoActionTypes.SET_IS_ROOM_HOST;
+  payload: boolean;
+}
+
+interface SetParticipantsAction {
+  type: RoomInfoActionTypes.SET_PARTICIPANTS;
+  payload: IParticipant[];
+}
+
+interface SetLoadingRoomInfoAction {
+  type: RoomInfoActionTypes.LOADING_ROOM_INFO;
   payload: boolean;
 }
 
@@ -48,4 +64,6 @@ export type RoomInfoActions =
   | SetConnectOnlyWithAudioAction
   | SetIdentityAction
   | SetRoomIdAction
-  | FetchRoomInfoSuccessAction;
+  | FetchRoomInfoSuccessAction
+  | SetLoadingRoomInfoAction
+  | SetParticipantsAction;
