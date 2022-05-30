@@ -14,7 +14,6 @@ function App() {
   useEffect(() => {
 
     connectWithSocketIOServer();
-    console.log('CONNN')
   }, [])
 
   return (

@@ -8,7 +8,6 @@ type ParticipantsListProps = {}
 const ParticipantsList: FC<ParticipantsListProps> = () => {
 
   const roomInfo = useAppSelector((state) => state.roomInfo);
-
   return (
     <List>
       {roomInfo.participants.map((itm, idx) => (
@@ -19,7 +18,7 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary={itm.identity}
+            primary={itm.identity.name}
           />
         </ListItem>
       ))}

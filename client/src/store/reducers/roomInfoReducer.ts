@@ -5,7 +5,10 @@ import {
 } from "../action-types/roomInfoActionTypes";
 
 const initState: RoomInfoState = {
-  identity: "",
+  identity: {
+    name: "",
+    id: "",
+  },
   roomId: "",
   isRoomHost: false,
   isConnectedOnlyWithAudio: false,
@@ -57,6 +60,17 @@ const roomInfoReducer = (state = initState, action: RoomInfoActions) => {
       return {
         ...state,
         participants: action.payload,
+      };
+
+    case RoomInfoActionTypes.SET_PARTICIPANT_STREAM:
+      const participantIdx = state.participants.findIndex(
+        (roomInfo) => roomInfo.identity.id === action.payload.userId
+      );
+      const newParticipants = [...state.participants];
+      newParticipants[participantIdx].stream = action.payload.stream;
+      return {
+        ...state,
+        participants: newParticipants,
       };
 
     default:

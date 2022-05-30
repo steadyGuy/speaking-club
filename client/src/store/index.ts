@@ -7,11 +7,19 @@ import {
 import errorReducer from "./reducers/errorReducer";
 import roomInfoReducer from "./reducers/roomInfoReducer";
 
+const rootReducer = combineReducers({
+  roomInfo: roomInfoReducer,
+  error: errorReducer,
+});
+
 export const store = configureStore({
-  reducer: combineReducers({
-    roomInfo: roomInfoReducer,
-    error: errorReducer,
-  }),
+  reducer: rootReducer,
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     serializableCheck: false,
+  //   }),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
   devTools: true,
 });
 

@@ -8,10 +8,14 @@ export enum RoomInfoActionTypes {
   FETCH_ROOM_INFO_SUCCESS = "FETCH_ROOM_INFO_SUCCESS",
   LOADING_ROOM_INFO = "LOADING_ROOM_INFO",
   SET_PARTICIPANTS = "SET_PARTICIPANTS",
+  SET_PARTICIPANT_STREAM = "SET_PARTICIPANT_STREAM",
 }
 
 export type RoomInfoState = {
-  identity: string;
+  identity: {
+    id: string;
+    name: string;
+  };
   roomId: string;
   isRoomHost: boolean;
   isConnectedOnlyWithAudio: boolean;
@@ -24,6 +28,11 @@ export type RoomInfoState = {
 interface SetRoomHostAction {
   type: RoomInfoActionTypes.SET_IS_ROOM_HOST;
   payload: boolean;
+}
+
+interface SetParticipantStreamAction {
+  type: RoomInfoActionTypes.SET_PARTICIPANT_STREAM;
+  payload: { userId: string; stream: MediaStream };
 }
 
 interface SetParticipantsAction {
@@ -43,7 +52,7 @@ interface SetConnectOnlyWithAudioAction {
 
 interface SetIdentityAction {
   type: RoomInfoActionTypes.SET_IDENTITY;
-  payload: string;
+  payload: { id: string; name: string };
 }
 
 interface SetRoomIdAction {
@@ -66,4 +75,5 @@ export type RoomInfoActions =
   | SetRoomIdAction
   | FetchRoomInfoSuccessAction
   | SetLoadingRoomInfoAction
-  | SetParticipantsAction;
+  | SetParticipantsAction
+  | SetParticipantStreamAction;

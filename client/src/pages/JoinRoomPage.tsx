@@ -1,6 +1,7 @@
 import { Box, Button, Checkbox, Container, FormControlLabel, Paper, TextField, Typography, useTheme } from '@mui/material'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid';
 import MainBg from '../components/MainBg'
 import { setError } from '../store/action-creators/errorActions'
 import { setIdentity, setIsConnectedOnlyWithAudio, setIsRoomHost, setRoomId } from '../store/action-creators/roomInfoActions'
@@ -50,12 +51,10 @@ const JoinRoomPage = () => {
 
   const joinRoom = async () => {
     const { roomExists, full } = await getRoomExists(roomInfo.roomId);
-    console.log('roomExists', typeof roomExists)
     if (roomExists) {
       if (full) {
         dispatch(setError("Meeting is full. Please, try again later"));
       } else {
-        console.log('IS HEEERRE')
         dispatch(setRoomId(roomInfo.roomId));
         navigate('/room', { replace: true });
       }
@@ -69,7 +68,7 @@ const JoinRoomPage = () => {
   }
 
   const handleJoinRoom = () => {
-    dispatch(setIdentity(roomInfo.name));
+    dispatch(setIdentity({ name: roomInfo.name, id: uuidv4() }));
     if (roomState.isRoomHost) {
       createRoom();
     } else {

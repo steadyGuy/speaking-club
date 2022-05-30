@@ -1,6 +1,10 @@
 export interface IParticipant {
-  identity: string;
+  identity: {
+    id: string;
+    name: string;
+  };
   id: string;
   socketId: string;
   roomId: string;
+  stream?: MediaStream;
 }
