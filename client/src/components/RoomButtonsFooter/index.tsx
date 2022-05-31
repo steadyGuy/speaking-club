@@ -8,14 +8,15 @@ import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import StopScreenShareIcon from '@mui/icons-material/StopScreenShare';
 import CloseIcon from '@mui/icons-material/Close';
 import { toggleScreenShareVideo, toggleVideoCamera, toggleVideoMicrophone } from '../../utils/webRTCHanlder';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setError } from '../../store/action-creators/errorActions';
 import LocalScreenSharingPreview from '../LocalScreenSharingPreview';
 
 const RoomButtonsFooter = () => {
   const dispatch = useAppDispatch();
+  const onlyAudio = useAppSelector((s) => s.roomInfo.isConnectedOnlyWithAudio);
   const [isMuted, setIsMuted] = useState(false);
-  const [isCameraOn, setIsCameraOn] = useState(true);
+  const [isCameraOn, setIsCameraOn] = useState(!onlyAudio);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [screenSharingStream, setScreenSharingStream] = useState<MediaStream | null>(null);
   const theme = useTheme()
@@ -78,10 +79,10 @@ const RoomButtonsFooter = () => {
         <IconButton size="medium" onClick={toggleMicrophone} color="inherit">
           {isMuted ? <MicOffIcon /> : <MicIcon />}
         </IconButton>
-        <IconButton size="medium" sx={{ ml: 4 }} color="inherit" onClick={toggleCamera}>
+        <IconButton size="medium" sx={{ ml: 4 }} color="inherit" onClick={toggleCamera} disabled={onlyAudio}>
           {isCameraOn ? <CameraAltIcon /> : <NoCameraIcon />}
         </IconButton>
-        <IconButton size="medium" sx={{ ml: 4 }} color="inherit" onClick={toggleScreenSharing}>
+        <IconButton size="medium" sx={{ ml: 4 }} color="inherit" onClick={toggleScreenSharing} disabled={onlyAudio}>
           {isScreenSharing ? <ScreenShareIcon /> : <StopScreenShareIcon />}
           {isScreenSharing && <LocalScreenSharingPreview stream={screenSharingStream as MediaStream} />}
         </IconButton>

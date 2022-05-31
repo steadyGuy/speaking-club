@@ -16,6 +16,7 @@ const initState: RoomInfoState = {
   isExists: false,
   loading: false,
   participants: [],
+  messages: [],
 };
 
 const roomInfoReducer = (state = initState, action: RoomInfoActions) => {
@@ -60,6 +61,12 @@ const roomInfoReducer = (state = initState, action: RoomInfoActions) => {
       return {
         ...state,
         participants: action.payload,
+      };
+
+    case RoomInfoActionTypes.SET_MESSAGES:
+      return {
+        ...state,
+        messages: action.payload,
       };
 
     default:

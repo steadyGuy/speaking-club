@@ -5,7 +5,11 @@ import {
   setParticipants,
   setRoomId,
 } from "../store/action-creators/roomInfoActions";
-import { handleSignalingData, prepareNewPeerConnection, removePeerConnection } from "./webRTCHanlder";
+import {
+  handleSignalingData,
+  prepareNewPeerConnection,
+  removePeerConnection,
+} from "./webRTCHanlder";
 const SERVER = `${process.env.REACT_APP_HOST}`;
 
 let socket: Socket | null = null;
@@ -30,7 +34,7 @@ export const connectWithSocketIOServer = () => {
 
       socket.on("conn-prepare", (data: any) => {
         const { connUserSocketId } = data;
-
+        console.log("connUserSocketId", connUserSocketId);
         prepareNewPeerConnection(connUserSocketId, false);
 
         // inform the user who just join the room that we have prepared for incoming connection
@@ -52,17 +56,25 @@ export const connectWithSocketIOServer = () => {
   });
 };
 
-export const createNewRoom = (user: { name: string; id: string }) => {
-  socket?.emit("create-new-room", user);
+export const createNewRoom = (
+  user: {
+    name: string;
+    id: string;
+  },
+  onlyAudio: boolean
+) => {
+  socket?.emit("create-new-room", { user, onlyAudio });
 };
 
 export const joinRoom = (
   user: { id: string; name: string },
-  roomId: string
+  roomId: string,
+  onlyAudio: boolean
 ) => {
   const data = {
     roomId,
     user,
+    onlyAudio,
   };
 
   socket?.emit("join-room", data);

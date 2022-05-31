@@ -1,4 +1,4 @@
-import { IParticipant } from "../../types";
+import { IMessage, IParticipant } from "../../types";
 
 export enum RoomInfoActionTypes {
   SET_IS_ROOM_HOST = "SET_IS_ROOM_HOST",
@@ -8,6 +8,7 @@ export enum RoomInfoActionTypes {
   FETCH_ROOM_INFO_SUCCESS = "FETCH_ROOM_INFO_SUCCESS",
   LOADING_ROOM_INFO = "LOADING_ROOM_INFO",
   SET_PARTICIPANTS = "SET_PARTICIPANTS",
+  SET_MESSAGES = "SET_MESSAGES",
 }
 
 export type RoomInfoState = {
@@ -22,11 +23,17 @@ export type RoomInfoState = {
   isExists: boolean;
   loading: boolean;
   participants: IParticipant[];
+  messages: IMessage[];
 };
 
 interface SetRoomHostAction {
   type: RoomInfoActionTypes.SET_IS_ROOM_HOST;
   payload: boolean;
+}
+
+interface SetRoomMessagesAction {
+  type: RoomInfoActionTypes.SET_MESSAGES;
+  payload: IMessage[];
 }
 
 interface SetParticipantsAction {
@@ -69,4 +76,5 @@ export type RoomInfoActions =
   | SetRoomIdAction
   | FetchRoomInfoSuccessAction
   | SetLoadingRoomInfoAction
-  | SetParticipantsAction;
+  | SetParticipantsAction
+  | SetRoomMessagesAction;

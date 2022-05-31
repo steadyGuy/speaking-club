@@ -5,17 +5,24 @@ import { getLocalPreviewAndInitRoomConnection } from '../utils/webRTCHanlder';
 import RoomButtonsFooter from '../components/RoomButtonsFooter';
 import { useAppSelector } from '../store/hooks';
 import Loader from '../components/Loader';
+import Chat from '../components/Chat';
 
 const RoomPage = () => {
   const theme = useTheme();
   const roomInfo = useAppSelector((state) => state.roomInfo);
 
   useEffect(() => {
-    getLocalPreviewAndInitRoomConnection(
-      roomInfo.isRoomHost,
-      roomInfo.identity,
-      roomInfo.roomId,
-    );
+
+    if (!roomInfo.isRoomHost && !roomInfo.roomId) {
+      window.location.href = window.location.origin;
+    } else {
+      getLocalPreviewAndInitRoomConnection(
+        roomInfo.isRoomHost,
+        roomInfo.identity,
+        roomInfo.roomId,
+        roomInfo.isConnectedOnlyWithAudio
+      );
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -23,7 +30,7 @@ const RoomPage = () => {
   return (
     <Container sx={{ pt: 4, height: '100vh' }}>
       {roomInfo.loading && <Loader />}
-      <Grid container spacing={0} sx={{ color: theme.palette.grey[50], height: '100%' }}>
+      <Grid columns={12} container spacing={4} sx={{ color: theme.palette.grey[50], height: '100%' }}>
         <Grid item xs={3}>
           <Typography variant="h3" sx={{ textTransform: 'uppercase' }}>
             Participants
@@ -32,7 +39,7 @@ const RoomPage = () => {
             <ParticipantsList />
           </Box>
         </Grid>
-        <Grid item xs={8}
+        <Grid item xs={6}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -71,6 +78,7 @@ const RoomPage = () => {
           <RoomButtonsFooter />
         </Grid>
         <Grid item xs={3}>
+          <Chat />
         </Grid>
       </Grid>
     </Container>

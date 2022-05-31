@@ -6,5 +6,12 @@ export interface IParticipant {
   id: string;
   socketId: string;
   roomId: string;
-  stream?: MediaStream;
+  onlyAudio: boolean;
+}
+
+export interface IMessage {
+  message: string;
+  time: string;
+  author: string;
+  isAuthor: boolean;
 }

@@ -44,19 +44,14 @@ async function start() {
   await fastify.listen(port, address);
 }
 
-const createNewRoomHandler = (
-  { name, id }: { name: string; id: string },
-  soc: Socket
-) => {
+const createNewRoomHandler = ({ user, onlyAudio }: any, soc: Socket) => {
   const roomId = randomUUID();
 
   console.log("host is created new room", roomId);
 
   const newUser = {
-    identity: {
-      name,
-      id: id,
-    },
+    identity: user,
+    onlyAudio,
     socketId: soc.id,
     roomId,
   };
@@ -77,16 +72,21 @@ const createNewRoomHandler = (
 };
 
 const joinRoomHandler = (
-  data: { user: { name: string; id: string }; roomId: string },
+  data: {
+    user: { name: string; id: string };
+    roomId: string;
+    onlyAudio: boolean;
+  },
   soc: Socket
 ) => {
-  const { user, roomId } = data;
+  const { user, roomId, onlyAudio } = data;
 
   const newUser = {
     identity: {
       name: user.name,
       id: user.id,
     },
+    onlyAudio,
     socketId: soc.id,
     roomId,
   };

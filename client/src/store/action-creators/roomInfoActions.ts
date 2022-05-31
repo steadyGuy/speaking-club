@@ -1,4 +1,4 @@
-import { IParticipant } from "../../types";
+import { IMessage, IParticipant } from "../../types";
 import { RoomInfoActionTypes } from "../action-types/roomInfoActionTypes";
 
 export const setIsRoomHost = (isRoomHost: boolean) => {
@@ -35,5 +35,12 @@ export const setParticipants = (participants: IParticipant[]) => {
   return {
     type: RoomInfoActionTypes.SET_PARTICIPANTS,
     payload: participants,
+  };
+};
+
+export const setMessages = (msgs: IMessage[]) => {
+  return {
+    type: RoomInfoActionTypes.SET_MESSAGES,
+    payload: msgs,
   };
 };

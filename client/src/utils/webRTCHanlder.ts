@@ -3,6 +3,8 @@ import { setError } from "../store/action-creators/errorActions";
 import { RoomInfoActionTypes } from "../store/action-types/roomInfoActionTypes";
 import { createNewRoom, joinRoom, signalPeerData } from "./wss";
 import Peer, { Instance, SignalData } from "simple-peer";
+import { setMessages } from "../store/action-creators/roomInfoActions";
+import { IMessage } from "../types";
 
 const defaultConstraints = {
   audio: true,
@@ -14,18 +16,21 @@ let localStream: MediaStream;
 export const getLocalPreviewAndInitRoomConnection = async (
   isRoomHost: boolean,
   identity: { id: string; name: string },
-  roomId: string | null = null
+  roomId: string | null = null,
+  onlyAudio: boolean
 ) => {
   try {
     store.dispatch({ type: RoomInfoActionTypes.LOADING_ROOM_INFO });
-    localStream = await navigator.mediaDevices.getUserMedia(defaultConstraints);
+    localStream = await navigator.mediaDevices.getUserMedia(
+      onlyAudio ? { audio: true, video: false } : defaultConstraints
+    );
 
     showLocalVideoPreview(localStream);
 
     if (isRoomHost) {
-      createNewRoom(identity);
+      createNewRoom(identity, onlyAudio);
     } else if (roomId) {
-      joinRoom(identity, roomId);
+      joinRoom(identity, roomId, onlyAudio);
     }
   } catch (error: any) {
     store.dispatch(setError(error.message));
@@ -48,6 +53,13 @@ export const showLocalVideoPreview = (stream: MediaStream) => {
   };
 
   videoWrapper.append(videoEl);
+
+  if (store.getState().roomInfo.isConnectedOnlyWithAudio) {
+    videoWrapper.append(
+      _getAudioOnlyLabel(store.getState().roomInfo.identity.name)
+    );
+  }
+
   root?.append(videoWrapper);
 };
 
@@ -87,22 +99,43 @@ const addStream = (stream: MediaStream, connUserSocketId: string) => {
   });
 
   videoWrapper.append(videoEl);
+
+  // check if other user connected only with audio
+  const participants = store.getState().roomInfo.participants;
+  const participant = participants.find((p) => p.socketId === connUserSocketId);
+
+  if (participant?.onlyAudio) {
+    videoWrapper.append(_getAudioOnlyLabel(participant.identity.name));
+  }
+
   root?.append(videoWrapper);
+};
+
+const _getAudioOnlyLabel = (name: string) => {
+  const labelContainer = document.createElement("div");
+  labelContainer.classList.add("audio-container");
+
+  const label = document.createElement("p");
+  label.classList.add("label_only_audio_text");
+  label.innerHTML = `Only Audio: ${name}`;
+
+  labelContainer.appendChild(label);
+  return labelContainer;
 };
 
 export const prepareNewPeerConnection = (
   connUserSocketId: string,
   isInitiator: boolean
 ) => {
-  peers[connUserSocketId] = new Peer({
+  const Pp = (window as any).SimplePeer as typeof Peer;
+  peers[connUserSocketId] = new Pp({
     initiator: isInitiator,
     config: getConfiguration(),
     stream: localStream,
+    channelName: "messenger",
   });
-
   peers[connUserSocketId].on("signal", (data) => {
     // webRTC offer, webRTC answer (SDP info), ice candidates
-
     const signalData = {
       signal: data,
       connUserSocketId: connUserSocketId,
@@ -116,6 +149,10 @@ export const prepareNewPeerConnection = (
 
     addStream(stream, connUserSocketId);
     streams = [...streams, stream];
+  });
+  peers[connUserSocketId].on("data", (data) => {
+    const messageData = JSON.parse(data);
+    _appendNewMessage(messageData);
   });
 };
 
@@ -191,4 +228,35 @@ const _switchVideoTracks = (stream: MediaStream) => {
       }
     }
   }
+};
+
+////////////////////// MESSAGES //////////////////////
+
+const _appendNewMessage = (msg: IMessage) => {
+  const messages = store.getState().roomInfo.messages;
+  store.dispatch(setMessages([...messages, msg]));
+};
+
+export const sendMsgUsingDataChannel = (msgText: string) => {
+  // append this message locally
+
+  const user = store.getState().roomInfo.identity;
+
+  const localMessageData: IMessage = {
+    message: msgText,
+    time: new Date().toLocaleTimeString(),
+    author: user.name,
+    isAuthor: true,
+  };
+
+  _appendNewMessage(localMessageData);
+
+  const msgDataStr = JSON.stringify({
+    message: msgText,
+    time: new Date().toLocaleTimeString(),
+    author: user.name,
+  });
+  Object.keys(peers).forEach((socId) => {
+    peers[socId].send(msgDataStr);
+  });
 };
