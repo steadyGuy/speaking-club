@@ -151,6 +151,10 @@ const disconnectHandler = (soc: Socket) => {
       fastify.io
         .to(room.id)
         .emit("room-update", { connectedUsers: room.connectedUsers });
+
+      // emit to all users who are still in the room that user disconnected
+
+      fastify.io.to(room.id).emit("user-disconnected", { socketId: soc.id });
     } else {
       rooms = rooms.filter((r) => r.id !== room.id);
     }

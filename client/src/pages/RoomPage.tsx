@@ -1,5 +1,5 @@
 import { Box, Container, Grid, Typography, useTheme } from '@mui/material'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import ParticipantsList from '../components/ParticipantsList';
 import { getLocalPreviewAndInitRoomConnection } from '../utils/webRTCHanlder';
 import RoomButtonsFooter from '../components/RoomButtonsFooter';
@@ -8,25 +8,21 @@ import Loader from '../components/Loader';
 
 const RoomPage = () => {
   const theme = useTheme();
-  const participantsGridRef = useRef<HTMLDivElement>();
   const roomInfo = useAppSelector((state) => state.roomInfo);
 
   useEffect(() => {
-    if (participantsGridRef.current) {
-      getLocalPreviewAndInitRoomConnection(
-        roomInfo.isRoomHost,
-        roomInfo.identity,
-        roomInfo.roomId,
-        participantsGridRef.current
-      );
-    }
+    getLocalPreviewAndInitRoomConnection(
+      roomInfo.isRoomHost,
+      roomInfo.identity,
+      roomInfo.roomId,
+    );
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // if (roomInfo.loading) return <Loader />
-
   return (
     <Container sx={{ pt: 4, height: '100vh' }}>
+      {roomInfo.loading && <Loader />}
       <Grid container spacing={0} sx={{ color: theme.palette.grey[50], height: '100%' }}>
         <Grid item xs={3}>
           <Typography variant="h3" sx={{ textTransform: 'uppercase' }}>
@@ -36,9 +32,8 @@ const RoomPage = () => {
             <ParticipantsList />
           </Box>
         </Grid>
-        <Grid item xs={7}
+        <Grid item xs={8}
           sx={{
-            background: 'green',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -70,9 +65,8 @@ const RoomPage = () => {
             </Typography>
           </Box>
           <Box
-            ref={participantsGridRef}
             id="participants-container"
-            sx={{ display: 'flex', flexWrap: 'wrap', height: '100%', alignItems: 'center' }}
+            sx={{ display: 'flex', flexWrap: 'wrap', height: '100%', alignItems: 'center', position: 'relative' }}
           />
           <RoomButtonsFooter />
         </Grid>

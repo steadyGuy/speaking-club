@@ -5,7 +5,7 @@ import {
   setParticipants,
   setRoomId,
 } from "../store/action-creators/roomInfoActions";
-import { handleSignalingData, prepareNewPeerConnection } from "./webRTCHanlder";
+import { handleSignalingData, prepareNewPeerConnection, removePeerConnection } from "./webRTCHanlder";
 const SERVER = `${process.env.REACT_APP_HOST}`;
 
 let socket: Socket | null = null;
@@ -43,6 +43,10 @@ export const connectWithSocketIOServer = () => {
 
       socket.on("conn-init", (data) => {
         prepareNewPeerConnection(data.connUserSocketId, true);
+      });
+
+      socket.on("user-disconnected", (data) => {
+        removePeerConnection(data);
       });
     }
   });

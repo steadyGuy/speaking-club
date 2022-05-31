@@ -62,17 +62,6 @@ const roomInfoReducer = (state = initState, action: RoomInfoActions) => {
         participants: action.payload,
       };
 
-    case RoomInfoActionTypes.SET_PARTICIPANT_STREAM:
-      const participantIdx = state.participants.findIndex(
-        (roomInfo) => roomInfo.identity.id === action.payload.userId
-      );
-      const newParticipants = [...state.participants];
-      newParticipants[participantIdx].stream = action.payload.stream;
-      return {
-        ...state,
-        participants: newParticipants,
-      };
-
     default:
       return state;
   }

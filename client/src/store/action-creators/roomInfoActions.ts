@@ -1,3 +1,4 @@
+import { IParticipant } from "../../types";
 import { RoomInfoActionTypes } from "../action-types/roomInfoActionTypes";
 
 export const setIsRoomHost = (isRoomHost: boolean) => {
@@ -30,12 +31,9 @@ export const setRoomId = (id: string) => {
   };
 };
 
-export const setParticipants = (data: {
-  userId: string;
-  stream: MediaStream;
-}) => {
+export const setParticipants = (participants: IParticipant[]) => {
   return {
-    type: RoomInfoActionTypes.SET_PARTICIPANT_STREAM,
-    payload: data,
+    type: RoomInfoActionTypes.SET_PARTICIPANTS,
+    payload: participants,
   };
 };
