@@ -10,6 +10,8 @@ import {
   prepareNewPeerConnection,
   removePeerConnection,
 } from "./webRTCHanlder";
+import { Identity, IMessage } from "../types";
+import { appendNewMessageToChatHistory } from "./directMessages";
 const SERVER = `${process.env.REACT_APP_HOST}`;
 
 let socket: Socket | null = null;
@@ -52,6 +54,11 @@ export const connectWithSocketIOServer = () => {
       socket.on("user-disconnected", (data) => {
         removePeerConnection(data);
       });
+
+      socket.on("direct-message", (data) => {
+        console.log("direct message came", data);
+        appendNewMessageToChatHistory(data);
+      });
     }
   });
 };
@@ -85,4 +92,18 @@ export const signalPeerData = (data: {
   connUserSocketId: string;
 }) => {
   socket?.emit("conn-signal", data);
+};
+
+export const sendDirectMessage = (msg: string) => {
+  const { activeConversation, identity } = store.getState().roomInfo;
+  console.log("IS EMMITING", {
+    receiver: activeConversation?.socketId,
+    sender: identity,
+    msg,
+  });
+  socket?.emit("direct-message", {
+    receiver: activeConversation?.socketId,
+    sender: identity,
+    msg,
+  });
 };

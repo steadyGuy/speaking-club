@@ -32,14 +32,19 @@ const RoomPage = () => {
     <Container sx={{ pt: 4, height: '100vh' }}>
       {roomInfo.loading && <Loader />}
       <Grid columns={12} container spacing={4} sx={{ color: theme.palette.grey[50], height: '100%' }}>
-        <Grid item xs={3}>
+        <Grid item xs={3} sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%'
+        }}>
           <Typography variant="h3" sx={{ textTransform: 'uppercase' }}>
             Participants
           </Typography>
-          <Box sx={{ mt: 5 }}>
+          <Box sx={{ mt: 5, display: 'flex', height: '100%', flexDirection: 'column', justifyContent: 'space-between' }}>
             <ParticipantsList />
+            <DirectChat />
           </Box>
-          <DirectChat />
         </Grid>
         <Grid item xs={6}
           sx={{

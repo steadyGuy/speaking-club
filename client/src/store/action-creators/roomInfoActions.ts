@@ -52,14 +52,14 @@ export const setSocketId = (socId: string) => {
   };
 };
 
-export const setDirectChatHistroy = (history: IMessage[]) => {
+export const setDirectChatHistroy = (history: Record<string, IMessage[]>) => {
   return {
     type: RoomInfoActionTypes.SET_DIRECT_CHAT_HISTORY,
     payload: history,
   };
 };
 
-export const setActiveConversation = (conversation: string) => {
+export const setActiveConversation = (conversation: IParticipant) => {
   return {
     type: RoomInfoActionTypes.SET_ACTIVE_CONVERSATION,
     payload: conversation,

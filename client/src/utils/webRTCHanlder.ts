@@ -21,9 +21,8 @@ export const getLocalPreviewAndInitRoomConnection = async (
   onlyAudio: boolean
 ) => {
   try {
-    await fetchTURNCredentials();
-
     store.dispatch({ type: RoomInfoActionTypes.LOADING_ROOM_INFO });
+    await fetchTURNCredentials();
     localStream = await navigator.mediaDevices.getUserMedia(
       onlyAudio ? { audio: true, video: false } : defaultConstraints
     );

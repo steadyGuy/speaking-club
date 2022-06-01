@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { FastifyInstance } from "fastify";
 import { Socket } from "socket.io";
-import { IRoom, IUser } from "../types";
+import { Identity, IRoom, IUser } from "../types";
 
 export let connectedUsers: IUser[] = [];
 export let rooms: IRoom[] = [];
@@ -35,7 +35,7 @@ export const createNewRoomHandler = ({ user, onlyAudio }: any, soc: Socket) => {
 
 export const joinRoomHandler = (
   data: {
-    user: { name: string; id: string };
+    user: Identity;
     roomId: string;
     onlyAudio: boolean;
   },
@@ -136,4 +136,40 @@ export const initiallizeConnectionHandler = (
 ) => {
   const initData = { connUserSocketId: soc.id };
   fastify.io.to(connUserSocketId).emit("conn-init", initData);
+};
+
+export const directMessageHandler = (
+  {
+    receiver,
+    sender,
+    msg,
+  }: {
+    receiver: string;
+    sender: Identity;
+    msg: string;
+  },
+  soc: Socket
+) => {
+  const connUser = connectedUsers.find(
+    (connUsr) => connUsr.socketId === receiver
+  );
+  if (connUser) {
+    const receiverData = {
+      authorIdentity: sender,
+      message: msg,
+      isAuthor: false,
+      receiverId: connUser.identity.id,
+    };
+
+    soc.to(receiver).emit("direct-message", receiverData);
+
+    const authorData = {
+      message: msg,
+      isAuthor: true,
+      authorIdentity: sender,
+      receiverId: connUser.identity.id,
+    };
+
+    soc.emit("direct-message", authorData);
+  }
 };

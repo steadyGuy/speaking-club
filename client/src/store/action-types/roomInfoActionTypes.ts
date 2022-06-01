@@ -24,28 +24,18 @@ export type RoomInfoState = {
   loading: boolean;
   participants: IParticipant[];
   messages: IMessage[];
-  activeConversation: {
-    identity: Identity;
-  } | null;
-  directChatHistory: IMessage[];
-  socketId: string;
+  activeConversation: IParticipant | null;
+  directChatHistory: Record<string, IMessage[]>;
 };
 
 interface SetDirectChatHistoryAction {
   type: RoomInfoActionTypes.SET_DIRECT_CHAT_HISTORY;
-  payload: IMessage[];
-}
-
-interface SetSocketIdAction {
-  type: RoomInfoActionTypes.SET_SOCKET_ID;
-  payload: string;
+  payload: Record<string, IMessage[]>;
 }
 
 interface SetActiveConversationAction {
   type: RoomInfoActionTypes.SET_ACTIVE_CONVERSATION;
-  payload: {
-    identity: Identity;
-  };
+  payload: IParticipant;
 }
 
 interface SetRoomHostAction {
@@ -101,5 +91,4 @@ export type RoomInfoActions =
   | SetParticipantsAction
   | SetRoomMessagesAction
   | SetActiveConversationAction
-  | SetSocketIdAction
   | SetDirectChatHistoryAction;

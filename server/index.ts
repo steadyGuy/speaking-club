@@ -3,6 +3,7 @@ import App from "./app";
 import fastifyIO from "fastify-socket.io";
 import {
   createNewRoomHandler,
+  directMessageHandler,
   disconnectHandler,
   initiallizeConnectionHandler,
   joinRoomHandler,
@@ -44,6 +45,7 @@ async function start() {
       soc.on("conn-init", (data: any) =>
         initiallizeConnectionHandler(data, soc, fastify)
       );
+      soc.on("direct-message", (data: any) => directMessageHandler(data, soc));
     });
   });
 

@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { Box, IconButton, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { sendMsgUsingDataChannel } from '../../utils/webRTCHanlder';
+import { sendDirectMessage } from '../../utils/wss';
+import { useAppSelector } from '../../store/hooks';
 
-export const TextInput = () => {
+export type TextInputProps = {
+  isDirect?: boolean;
+}
+
+export const TextInput: FC<TextInputProps> = ({ isDirect }) => {
   const [message, setMessage] = useState("");
-
+  const activeConversation = useAppSelector((s) => s.roomInfo.activeConversation)
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   }
@@ -21,7 +27,11 @@ export const TextInput = () => {
   const sendMessage = () => {
     if (message.length > 0) {
       setMessage('');
-      sendMsgUsingDataChannel(message);
+      if (isDirect) {
+        sendDirectMessage(message)
+      } else {
+        sendMsgUsingDataChannel(message)
+      }
     }
   }
 
@@ -33,6 +43,7 @@ export const TextInput = () => {
           margin="dense"
           onChange={handleMessageChange}
           onKeyDown={handleKeyPressed}
+          disabled={!activeConversation && isDirect}
           label="Print your message."
         />
         <IconButton size="large" sx={{ ml: 2 }} color="primary" onClick={sendMessage}>
