@@ -1,4 +1,4 @@
-import { IMessage, IParticipant } from "../../types";
+import { Identity, IMessage, IParticipant } from "../../types";
 
 export enum RoomInfoActionTypes {
   SET_IS_ROOM_HOST = "SET_IS_ROOM_HOST",
@@ -9,13 +9,13 @@ export enum RoomInfoActionTypes {
   LOADING_ROOM_INFO = "LOADING_ROOM_INFO",
   SET_PARTICIPANTS = "SET_PARTICIPANTS",
   SET_MESSAGES = "SET_MESSAGES",
+  SET_SOCKET_ID = "SET_SOCKET_ID",
+  SET_DIRECT_CHAT_HISTORY = "SET_DIRECT_CHAT_HISTORY",
+  SET_ACTIVE_CONVERSATION = "SET_ACTIVE_CONVERSATION",
 }
 
 export type RoomInfoState = {
-  identity: {
-    id: string;
-    name: string;
-  };
+  identity: Identity;
   roomId: string;
   isRoomHost: boolean;
   isConnectedOnlyWithAudio: boolean;
@@ -24,7 +24,29 @@ export type RoomInfoState = {
   loading: boolean;
   participants: IParticipant[];
   messages: IMessage[];
+  activeConversation: {
+    identity: Identity;
+  } | null;
+  directChatHistory: IMessage[];
+  socketId: string;
 };
+
+interface SetDirectChatHistoryAction {
+  type: RoomInfoActionTypes.SET_DIRECT_CHAT_HISTORY;
+  payload: IMessage[];
+}
+
+interface SetSocketIdAction {
+  type: RoomInfoActionTypes.SET_SOCKET_ID;
+  payload: string;
+}
+
+interface SetActiveConversationAction {
+  type: RoomInfoActionTypes.SET_ACTIVE_CONVERSATION;
+  payload: {
+    identity: Identity;
+  };
+}
 
 interface SetRoomHostAction {
   type: RoomInfoActionTypes.SET_IS_ROOM_HOST;
@@ -77,4 +99,7 @@ export type RoomInfoActions =
   | FetchRoomInfoSuccessAction
   | SetLoadingRoomInfoAction
   | SetParticipantsAction
-  | SetRoomMessagesAction;
+  | SetRoomMessagesAction
+  | SetActiveConversationAction
+  | SetSocketIdAction
+  | SetDirectChatHistoryAction;

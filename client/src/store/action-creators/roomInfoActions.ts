@@ -44,3 +44,24 @@ export const setMessages = (msgs: IMessage[]) => {
     payload: msgs,
   };
 };
+
+export const setSocketId = (socId: string) => {
+  return {
+    type: RoomInfoActionTypes.SET_SOCKET_ID,
+    payload: socId,
+  };
+};
+
+export const setDirectChatHistroy = (history: IMessage[]) => {
+  return {
+    type: RoomInfoActionTypes.SET_DIRECT_CHAT_HISTORY,
+    payload: history,
+  };
+};
+
+export const setActiveConversation = (conversation: string) => {
+  return {
+    type: RoomInfoActionTypes.SET_ACTIVE_CONVERSATION,
+    payload: conversation,
+  };
+};

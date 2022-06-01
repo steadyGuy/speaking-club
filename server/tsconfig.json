@@ -3,7 +3,7 @@
     "files": true
   },
   "files": [
-    "typings.d.ts"
+    "index.d.ts"
   ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */

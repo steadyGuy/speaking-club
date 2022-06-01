@@ -292,6 +292,13 @@
   resolved "https://registry.yarnpkg.com/@types/strip-json-comments/-/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
   integrity sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==
 
+"@types/twilio@^3.19.3":
+  version "3.19.3"
+  resolved "https://registry.yarnpkg.com/@types/twilio/-/twilio-3.19.3.tgz#dda809e4626bf187a4c5028517aea74f3c2fa8e1"
+  integrity sha512-W53Z0TDCu6clZ5CzTWHRPnpQAad+AANglx6WiQ4Mkxxw21o4BYBx5EhkfR6J4iYqY58rtWB3r8kDGJ4y1uTUGQ==
+  dependencies:
+    twilio "*"
+
 abbrev@1, abbrev@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -2465,7 +2472,7 @@ tsconfig@^7.0.0:
     strip-bom "^3.0.0"
     strip-json-comments "^2.0.0"
 
-twilio@^3.77.1:
+twilio@*, twilio@^3.77.1:
   version "3.77.1"
   resolved "https://registry.yarnpkg.com/twilio/-/twilio-3.77.1.tgz#4550e3bd227c1b63761691f7816c22d86db4dcce"
   integrity sha512-0G8HMwIwc7Wq2x7CdMIqjOE3/XXCwu2jnERXRCaLJTpDIi6CxVkaM9W8iCAyuISb3bPjvON+RWpLcDbTDARiTQ==

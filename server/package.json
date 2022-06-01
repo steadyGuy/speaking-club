@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.35",
+    "@types/twilio": "^3.19.3",
     "ts-node": "^10.8.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.7.2"

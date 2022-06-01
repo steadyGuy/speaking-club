@@ -6,6 +6,7 @@ import RoomButtonsFooter from '../components/RoomButtonsFooter';
 import { useAppSelector } from '../store/hooks';
 import Loader from '../components/Loader';
 import Chat from '../components/Chat';
+import DirectChat from '../components/Chat/DirectChat';
 
 const RoomPage = () => {
   const theme = useTheme();
@@ -38,6 +39,7 @@ const RoomPage = () => {
           <Box sx={{ mt: 5 }}>
             <ParticipantsList />
           </Box>
+          <DirectChat />
         </Grid>
         <Grid item xs={6}
           sx={{

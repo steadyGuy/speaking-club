@@ -5,6 +5,7 @@ import { createNewRoom, joinRoom, signalPeerData } from "./wss";
 import Peer, { Instance, SignalData } from "simple-peer";
 import { setMessages } from "../store/action-creators/roomInfoActions";
 import { IMessage } from "../types";
+import { fetchTURNCredentials, getTURNIceServers } from "./turn";
 
 const defaultConstraints = {
   audio: true,
@@ -20,6 +21,8 @@ export const getLocalPreviewAndInitRoomConnection = async (
   onlyAudio: boolean
 ) => {
   try {
+    await fetchTURNCredentials();
+
     store.dispatch({ type: RoomInfoActionTypes.LOADING_ROOM_INFO });
     localStream = await navigator.mediaDevices.getUserMedia(
       onlyAudio ? { audio: true, video: false } : defaultConstraints
@@ -66,13 +69,22 @@ export const showLocalVideoPreview = (stream: MediaStream) => {
 let peers: Record<string, Instance> = {};
 let streams: MediaStream[] = [];
 
-const getConfiguration = () => ({
-  iceServers: [
+const getConfiguration = () => {
+  const iceServers = [
     {
       urls: "stun:stun.l.google.com:19302",
     },
-  ],
-});
+  ];
+  const turnIceServers = getTURNIceServers();
+
+  if (turnIceServers) {
+    iceServers.forEach((s) => iceServers.push(s));
+  }
+
+  return {
+    iceServers,
+  };
+};
 
 const addStream = (stream: MediaStream, connUserSocketId: string) => {
   const root = document.getElementById("participants-container");

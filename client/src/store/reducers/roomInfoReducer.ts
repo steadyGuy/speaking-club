@@ -17,6 +17,9 @@ const initState: RoomInfoState = {
   loading: false,
   participants: [],
   messages: [],
+  activeConversation: null,
+  directChatHistory: [],
+  socketId: "",
 };
 
 const roomInfoReducer = (state = initState, action: RoomInfoActions) => {
@@ -67,6 +70,24 @@ const roomInfoReducer = (state = initState, action: RoomInfoActions) => {
       return {
         ...state,
         messages: action.payload,
+      };
+
+    case RoomInfoActionTypes.SET_ACTIVE_CONVERSATION:
+      return {
+        ...state,
+        activeConversation: action.payload,
+      };
+
+    case RoomInfoActionTypes.SET_DIRECT_CHAT_HISTORY:
+      return {
+        ...state,
+        directChatHistory: action.payload,
+      };
+
+    case RoomInfoActionTypes.SET_SOCKET_ID:
+      return {
+        ...state,
+        socketId: action.payload,
       };
 
     default:

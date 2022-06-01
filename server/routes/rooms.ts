@@ -1,6 +1,6 @@
 import { RouteOptions, FastifyRequest, FastifyReply } from "fastify";
 import S from "fluent-json-schema";
-import { rooms } from "../index";
+import { rooms } from "../socket-handlers";
 
 export const autoPrefix = "/api";
 

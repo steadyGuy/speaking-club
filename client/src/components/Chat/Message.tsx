@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import { Theme } from "@mui/material/styles";
 import { createStyles, makeStyles } from '@mui/styles';
@@ -102,14 +102,10 @@ const useStyles = makeStyles((theme: Theme) =>
     orange: {
       color: theme.palette.getContrastText(deepOrange[500]),
       backgroundColor: deepOrange[500],
-      width: theme.spacing(4),
-      height: theme.spacing(4)
     },
     avatarNothing: {
       color: "transparent",
       backgroundColor: "transparent",
-      width: theme.spacing(4),
-      height: theme.spacing(4)
     },
     displayName: {
       marginLeft: "20px"
@@ -128,10 +124,11 @@ export const MessageLeft = (props: any) => {
       <div className={classes.messageRow}>
         <Avatar
           alt={displayName}
+          sx={{ width: 36, height: 36 }}
           className={classes.orange}
           src={photoURL}
-        ></Avatar>
-        <div>
+        />
+        <Box sx={{ width: '100%', mr: 5 }}>
           <div className={classes.displayName}>{displayName}</div>
           <div className={classes.messageBlue}>
             <div>
@@ -139,7 +136,7 @@ export const MessageLeft = (props: any) => {
             </div>
             <div className={classes.messageTimeStampRight}>{timestamp}</div>
           </div>
-        </div>
+        </Box>
       </div>
     </>
   );

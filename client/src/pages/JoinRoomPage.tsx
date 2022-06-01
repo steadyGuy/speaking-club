@@ -8,6 +8,7 @@ import { setIdentity, setIsConnectedOnlyWithAudio, setIsRoomHost, setRoomId } fr
 import { ErrorActionTypes } from '../store/action-types/errorActionTypes'
 import { RoomInfoActionTypes } from '../store/action-types/roomInfoActionTypes'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { getRoomExists } from '../utils/api';
 
 const JoinRoomPage = () => {
   const search = useLocation().search;
@@ -28,25 +29,6 @@ const JoinRoomPage = () => {
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
     dispatch(setIsConnectedOnlyWithAudio(checked))
-  }
-
-  const getRoomExists = async (roomId: string) => {
-    try {
-      const res = await fetch(
-        `${process.env.REACT_APP_HOST}/api/room-exists/${roomId}`
-      );
-      const json = await res.json();
-      if (json) {
-        dispatch({
-          type: RoomInfoActionTypes.FETCH_ROOM_INFO_SUCCESS,
-          payload: json,
-        });
-      }
-      return json;
-    } catch (err: any) {
-      console.log("Error", err);
-      dispatch({ type: ErrorActionTypes.SET_ERROR, payload: { message: err } });
-    }
   }
 
   const joinRoom = async () => {

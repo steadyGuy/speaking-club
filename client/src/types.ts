@@ -15,3 +15,8 @@ export interface IMessage {
   author: string;
   isAuthor: boolean;
 }
+
+export type Identity = {
+  id: string;
+  name: string;
+};
