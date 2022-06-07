@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "homepage": "https://steadyguy.github.io",
+  "homepage": "https://steadyGuy.github.io/speaking-club/client",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
