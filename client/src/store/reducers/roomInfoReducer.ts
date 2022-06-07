@@ -12,8 +12,6 @@ const initState: RoomInfoState = {
   roomId: "",
   isRoomHost: false,
   isConnectedOnlyWithAudio: false,
-  isFull: false,
-  isExists: false,
   loading: false,
   participants: [],
   messages: [],

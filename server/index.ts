@@ -54,8 +54,7 @@ async function start() {
 
     let config = (fastify as unknown as any).config;
     const port = config.PORT;
-    console.log(config);
-    await fastify.listen(port);
+    await fastify.listen(port, "0.0.0.0");
   });
 }
 

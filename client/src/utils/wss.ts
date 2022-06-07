@@ -22,8 +22,6 @@ export const connectWithSocketIOServer = () => {
   socket.on("connect", () => {
     console.log("Successfully connected");
     if (socket) {
-      console.log(socket.id);
-
       socket.on("room-id", (data) => {
         const { roomId } = data;
         store.dispatch(setRoomId(roomId));
@@ -36,7 +34,6 @@ export const connectWithSocketIOServer = () => {
 
       socket.on("conn-prepare", (data: any) => {
         const { connUserSocketId } = data;
-        console.log("connUserSocketId", connUserSocketId);
         prepareNewPeerConnection(connUserSocketId, false);
 
         // inform the user who just join the room that we have prepared for incoming connection
@@ -56,7 +53,6 @@ export const connectWithSocketIOServer = () => {
       });
 
       socket.on("direct-message", (data) => {
-        console.log("direct message came", data);
         appendNewMessageToChatHistory(data);
       });
     }
@@ -96,11 +92,6 @@ export const signalPeerData = (data: {
 
 export const sendDirectMessage = (msg: string) => {
   const { activeConversation, identity } = store.getState().roomInfo;
-  console.log("IS EMMITING", {
-    receiver: activeConversation?.socketId,
-    sender: identity,
-    msg,
-  });
   socket?.emit("direct-message", {
     receiver: activeConversation?.socketId,
     sender: identity,

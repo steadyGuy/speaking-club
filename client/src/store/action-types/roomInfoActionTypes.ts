@@ -19,8 +19,6 @@ export type RoomInfoState = {
   roomId: string;
   isRoomHost: boolean;
   isConnectedOnlyWithAudio: boolean;
-  isFull: boolean;
-  isExists: boolean;
   loading: boolean;
   participants: IParticipant[];
   messages: IMessage[];

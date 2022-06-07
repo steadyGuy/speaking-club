@@ -23,15 +23,12 @@ export default async function status(fastify: any, opts: RouteOptions) {
     reply: FastifyReply
   ) {
     const { TWILIO_SID, TWILIO_AUTH_TOKEN } = fastify.config;
-    console.log("TWILIO_SID, TWILIO_AUTH_TOKEN", TWILIO_SID, TWILIO_AUTH_TOKEN);
     const client = twilio(TWILIO_SID, TWILIO_AUTH_TOKEN);
 
     try {
       const token = await client.tokens.create();
-      console.log("tokentokentoken", token);
       return { token };
     } catch (error) {
-      console.log("Error", error);
       return { error: "An error occured", token: null };
     }
   }
