@@ -18,7 +18,8 @@ function App() {
 
   return (
     <>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      {/* For backend, may be returned: basename={process.env.PUBLIC_URL} */}
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<IntroPage />} />
           <Route path="/join-room" element={<JoinRoomPage />} />

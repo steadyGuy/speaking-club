@@ -31,7 +31,7 @@ const RoomPage = () => {
   return (
     <Container sx={{ pt: 4, height: '100vh' }}>
       {roomInfo.loading && <Loader />}
-      <Grid columns={12} container spacing={4} sx={{ color: theme.palette.grey[50], height: '100%' }}>
+      <Grid columns={12} container spacing={4} sx={{ color: theme.palette.grey[50], height: '100%'}}>
         <Grid item xs={3} sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -51,7 +51,8 @@ const RoomPage = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            height: '100%'
+            height: '100%',
+            pt: 2
           }}
         >
           <Box sx={{

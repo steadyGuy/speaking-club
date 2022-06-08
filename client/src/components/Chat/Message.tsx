@@ -1,5 +1,4 @@
 import { Avatar, Box } from "@mui/material";
-import { deepOrange } from "@mui/material/colors";
 import { Theme } from "@mui/material/styles";
 import { createStyles, makeStyles } from '@mui/styles';
 import React from "react";
@@ -20,18 +19,18 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "20px",
       marginBottom: "10px",
       padding: "10px",
-      backgroundColor: "#A8DDFD",
+      backgroundColor: "#E8EAEF",
       width: "100%",
       textAlign: "left",
       font: "400 .9em 'Open Sans', sans-serif",
-      border: "1px solid #97C6E3",
+      border: "1px solid #E8EAEF",
       borderRadius: "10px",
       "&:after": {
         content: "''",
         position: "absolute",
         width: "0",
         height: "0",
-        borderTop: "15px solid #A8DDFD",
+        borderTop: "15px solid #E8EAEF",
         borderLeft: "15px solid transparent",
         borderRight: "15px solid transparent",
         top: "0",
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
         position: "absolute",
         width: "0",
         height: "0",
-        borderTop: "17px solid #97C6E3",
+        borderTop: "17px solid #E8EAEF",
         borderLeft: "16px solid transparent",
         borderRight: "16px solid transparent",
         top: "-1px",
@@ -54,19 +53,20 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: "20px",
       marginBottom: "10px",
       padding: "10px",
-      backgroundColor: "#f8e896",
+      backgroundColor: '#3F3356',
+      color: "#fff",
       width: "100%",
       //height: "50px",
       textAlign: "left",
       font: "400 .9em 'Open Sans', sans-serif",
-      border: "1px solid #dfd087",
+      border: "1px solid #3F3356",
       borderRadius: "10px",
       "&:after": {
         content: "''",
         position: "absolute",
         width: "0",
         height: "0",
-        borderTop: "15px solid #f8e896",
+        borderTop: "15px solid #3F3356",
         borderLeft: "15px solid transparent",
         borderRight: "15px solid transparent",
         top: "0",
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
         position: "absolute",
         width: "0",
         height: "0",
-        borderTop: "17px solid #dfd087",
+        borderTop: "17px solid #3F3356",
         borderLeft: "16px solid transparent",
         borderRight: "16px solid transparent",
         top: "-1px",
@@ -100,8 +100,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     orange: {
-      color: theme.palette.getContrastText(deepOrange[500]),
-      backgroundColor: deepOrange[500],
+      color: theme.palette.primary.light,
+      backgroundColor: theme.palette.primary.dark,
     },
     avatarNothing: {
       color: "transparent",

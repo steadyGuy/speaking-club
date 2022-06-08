@@ -62,7 +62,7 @@ const RoomButtonsFooter = () => {
   }
 
   const handleLeavingRoom = () => {
-    window.location.href = window.location.origin;
+    window.location.href = window.location.href.slice(0, -5);
   }
 
   return (
