@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/speaking-club/static/css/main.b5debdcb.css",
-    "main.js": "/speaking-club/static/js/main.79180e28.js",
+    "main.css": "/speaking-club/static/css/main.5ea5d5a3.css",
+    "main.js": "/speaking-club/static/js/main.7f1360cc.js",
     "static/js/787.68f47b59.chunk.js": "/speaking-club/static/js/787.68f47b59.chunk.js",
     "static/media/introduction-bg.png": "/speaking-club/static/media/introduction-bg.23d240ddd6db9c16d425.png",
     "index.html": "/speaking-club/index.html",
-    "main.b5debdcb.css.map": "/speaking-club/static/css/main.b5debdcb.css.map",
-    "main.79180e28.js.map": "/speaking-club/static/js/main.79180e28.js.map",
+    "main.5ea5d5a3.css.map": "/speaking-club/static/css/main.5ea5d5a3.css.map",
+    "main.7f1360cc.js.map": "/speaking-club/static/js/main.7f1360cc.js.map",
     "787.68f47b59.chunk.js.map": "/speaking-club/static/js/787.68f47b59.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b5debdcb.css",
-    "static/js/main.79180e28.js"
+    "static/css/main.5ea5d5a3.css",
+    "static/js/main.7f1360cc.js"
   ]
 }
