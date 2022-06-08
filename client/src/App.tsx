@@ -18,8 +18,8 @@ function App() {
 
   return (
     <>
-      {/* For backend, may be returned: basename={process.env.PUBLIC_URL} */}
-      <BrowserRouter>
+      {/* In dev mode, should be removed basename={process.env.PUBLIC_URL} */}
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<IntroPage />} />
           <Route path="/join-room" element={<JoinRoomPage />} />
